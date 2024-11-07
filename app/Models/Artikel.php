@@ -9,7 +9,7 @@ class Artikel extends Model
 {
     use HasFactory;
     // Tentukan nama tabel jika berbeda dari nama model yang diharapkan
-    protected $table = 'Artikel';
+    protected $table = 'Artikels';
 
     // Tentukan atribut yang dapat diisi secara massal
     protected $fillable = [
