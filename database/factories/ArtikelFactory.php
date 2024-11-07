@@ -26,8 +26,6 @@ class ArtikelFactory extends Factory
             'isi' => $this->faker->paragraphs(3, true), // Isi artikel dengan 3 paragraf
             'gambar' => $this->faker->optional()->imageUrl(640, 480, 'articles', true), // URL gambar, bisa nullable
             'nama' => $this->faker->name, // Nama pembuat artikel
-            'created_at' => now(),
-            'updated_at' => now(),
         ];
     }
 }
