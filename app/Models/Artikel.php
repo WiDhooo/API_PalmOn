@@ -16,6 +16,6 @@ class Artikel extends Model
         'judul',
         'isi',
         'gambar',
-        'nama',
+        'nama_pembuat',
     ];
 }

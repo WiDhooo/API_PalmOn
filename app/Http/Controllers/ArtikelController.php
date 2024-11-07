@@ -27,7 +27,7 @@ class ArtikelController extends Controller
             'judul' => 'required|string|max:255',
             'isi' => 'required|string',
             'gambar' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'nama' => 'required|string|max:100',
+            'nama_pembuat' => 'required|string|max:100',
         ]);
 
         // Check if validation fails
@@ -35,8 +35,8 @@ class ArtikelController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // Handle file upload if present
-        $fileName = null;
+        // Handle file upload if present, otherwise use default image
+        $fileName = 'default.png';  // Set default image name
         if ($request->hasFile('gambar')) {
             $fileName = 'artikel-' . uniqid() . '.' . $request->gambar->extension();
             $request->gambar->move(public_path('assets/img'), $fileName);
@@ -46,8 +46,8 @@ class ArtikelController extends Controller
         $artikel = Artikel::create([
             'judul' => $request->judul,
             'isi' => $request->isi,
-            'gambar' => $fileName ? 'assets/img/' . $fileName : null,
-            'nama' => $request->nama,
+            'gambar' => 'assets/img/' . $fileName,  // Save the image path
+            'nama_pembuat' => $request->nama_pembuat,
         ]);
 
         return response()->json(['message' => 'Artikel created successfully', 'data' => $artikel], 201);
@@ -77,7 +77,7 @@ class ArtikelController extends Controller
             'judul' => 'sometimes|required|string|max:255',
             'isi' => 'sometimes|required|string',
             'gambar' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'nama' => 'sometimes|required|string|max:100',
+            'nama_pembuat' => 'sometimes|required|string|max:100',
         ]);
 
         // Check if validation fails
@@ -92,15 +92,18 @@ class ArtikelController extends Controller
             return response()->json(['message' => 'Artikel not found'], 404);
         }
 
-        // Handle file upload if present
+        // Handle file upload if present, otherwise use default image
         if ($request->hasFile('gambar')) {
             $fileName = 'artikel-' . uniqid() . '.' . $request->gambar->extension();
             $request->gambar->move(public_path('assets/img'), $fileName);
             $artikel->gambar = 'assets/img/' . $fileName;
+        } else {
+            // If no image is uploaded, use the default image
+            $artikel->gambar = 'assets/img/default.jpg';
         }
 
         // Update the article with validated data
-        $artikel->update($request->only('judul', 'isi', 'nama'));
+        $artikel->update($request->only('judul', 'isi', 'nama_pembuat'));
 
         return response()->json(['message' => 'Artikel updated successfully', 'data' => $artikel]);
     }
