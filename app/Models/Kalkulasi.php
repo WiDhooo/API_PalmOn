@@ -14,6 +14,7 @@ class Kalkulasi extends Model
 
     // Tentukan atribut yang dapat diisi secara massal
     protected $fillable = [
+        'id_user',
         'tgl_panen',
         'harga_tbs',
         'berat_total_tbs',

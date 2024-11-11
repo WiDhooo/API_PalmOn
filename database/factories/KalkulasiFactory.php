@@ -17,6 +17,7 @@ class KalkulasiFactory extends Factory
     public function definition()
     {
         return [
+            'id_user' => $this->faker->numberBetween(0,1000),
             'tgl_panen' => $this->faker->date(),
             'harga_tbs' => $this->faker->numberBetween(800, 2000), // assuming it's in a range per unit
             'berat_total_tbs' => $this->faker->numberBetween(500, 10000), // random weight in kg
