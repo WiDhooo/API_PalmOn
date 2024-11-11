@@ -7,12 +7,13 @@ use App\Models\Kalkulasi;
 
 class KalkulasiController extends Controller
 {
-    public function index()
+    // Menampilkan semua kalkulasi berdasarkan id_user
+    public function index($id_user)
     {
-        $data = Kalkulasi::all();
+        $data = Kalkulasi::where('id_user', $id_user)->get();
 
         $result = $data->map(function ($item) {
-            $berat_bersih = $item->berat_total_tbs * (100-$item->potongan_timbangan)/100;
+            $berat_bersih = $item->berat_total_tbs * (100 - $item->potongan_timbangan) / 100;
             $total_pendapatan = $berat_bersih * $item->harga_tbs;
             $total_pengeluaran = ($item->upah_panen * $item->berat_total_tbs) + $item->biaya_transportasi + $item->biaya_lainnya;
             $total_hasil_bersih = $total_pendapatan - $total_pengeluaran;
@@ -29,7 +30,8 @@ class KalkulasiController extends Controller
         return response()->json($result);
     }
 
-    public function store(Request $request)
+    // Menambah kalkulasi baru berdasarkan id_user
+    public function store(Request $request, $id_user)
     {
         $validated = $request->validate([
             'tgl_panen' => 'required|date',
@@ -41,20 +43,24 @@ class KalkulasiController extends Controller
             'biaya_lainnya' => 'required|numeric',
         ]);
 
+        // Menambahkan id_user pada data yang akan disimpan
+        $validated['id_user'] = $id_user;
+
         $record = Kalkulasi::create($validated);
 
         return response()->json($record, 201);
     }
 
-    public function show($id)
+    // Menampilkan kalkulasi berdasarkan id_user dan id
+    public function show($id_user, $id)
     {
-        $kalkulasi = Kalkulasi::find($id);
+        $kalkulasi = Kalkulasi::where('id_user', $id_user)->find($id);
 
         if (!$kalkulasi) {
             return response()->json(['error' => 'Data not found'], 404);
         }
 
-        $berat_bersih = $kalkulasi->berat_total_tbs * (100-$kalkulasi->potongan_timbangan)/100;
+        $berat_bersih = $kalkulasi->berat_total_tbs * (100 - $kalkulasi->potongan_timbangan) / 100;
         $total_pendapatan = $berat_bersih * $kalkulasi->harga_tbs;
         $total_pengeluaran = ($kalkulasi->upah_panen * $kalkulasi->berat_total_tbs) + $kalkulasi->biaya_transportasi + $kalkulasi->biaya_lainnya;
         $total_hasil_bersih = $total_pendapatan - $total_pengeluaran;
@@ -74,7 +80,8 @@ class KalkulasiController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    // Mengupdate kalkulasi berdasarkan id_user dan id
+    public function update(Request $request, $id_user, $id)
     {
         $validated = $request->validate([
             'tgl_panen' => 'date',
@@ -86,15 +93,16 @@ class KalkulasiController extends Controller
             'biaya_lainnya' => 'numeric',
         ]);
 
-        $record = Kalkulasi::findOrFail($id);
+        $record = Kalkulasi::where('id_user', $id_user)->findOrFail($id);
         $record->update($validated);
 
         return response()->json($record);
     }
 
-    public function destroy($id)
+    // Menghapus kalkulasi berdasarkan id_user dan id
+    public function destroy($id_user, $id)
     {
-        $record = Kalkulasi::findOrFail($id);
+        $record = Kalkulasi::where('id_user', $id_user)->findOrFail($id);
         $record->delete();
 
         return response()->json(["message" => "DELETED"]);

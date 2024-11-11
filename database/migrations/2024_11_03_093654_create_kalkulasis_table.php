@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('kalkulasis', function (Blueprint $table) {
             $table->id();
+            $table->integer('id_user');
             $table->date('tgl_panen');
             $table->decimal('harga_tbs', 10, 2);
             $table->decimal('berat_total_tbs', 10, 2);
