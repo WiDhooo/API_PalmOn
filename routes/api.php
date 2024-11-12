@@ -1,8 +1,15 @@
 <?php
 
+//API DISINI SEMUA
 use App\Http\Controllers\KalkulasiController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\UserUmumController;
+use App\Http\Controllers\GuideController;
+use App\Http\Controllers\SimulasiGuideController;
+use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\OrderController;
+
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,3 +34,8 @@ Route::delete('kalkulasi/{id_user}/{id}', [KalkulasiController::class, 'destroy'
 Route::apiResource('artikel', ArtikelController::class);
 Route::apiResource('user_umum', UserUmumController::class);
 Route::post('user_umum/login', [UserUmumController::class, 'login']);
+
+Route::apiResource("guides", GuideController::class);
+Route::apiResource('simulasi_guides', SimulasiGuideController::class);
+Route::apiResource('produks', ProdukController::class);
+Route::apiResource('orders', OrderController::class);
