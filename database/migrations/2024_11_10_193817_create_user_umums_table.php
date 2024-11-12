@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('email');
             $table->string('no_telp');
             $table->string('profile_picture')->nullable();
+            $table->string('jenis_kelamin')->nullable();
+            $table->string('tanggal_lahir')->nullable();
             $table->timestamps();
         });
     }
