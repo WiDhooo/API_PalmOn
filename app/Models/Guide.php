@@ -9,6 +9,6 @@ class Guide extends Model
     //
     protected $table = 'guides';
 
-    protected $fillable = ['judul', 'isi', 'gambar', 'nama_pembuat'];
+    protected $fillable = ['judul', 'isi', 'gambar', 'nama_pembuat', 'tag'];
 
 }

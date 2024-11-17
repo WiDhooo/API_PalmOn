@@ -23,6 +23,7 @@ class GuideController extends Controller
             'isi' => 'required',
             'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'nama_pembuat' => 'required|string|max:255',
+            'tag' => 'required|string|max:25',
         ]);
 
         // Upload gambar
@@ -34,6 +35,7 @@ class GuideController extends Controller
         $guide->isi = $request->isi;
         $guide->gambar = $path; // Simpan path gambar
         $guide->nama_pembuat = $request->nama_pembuat;
+        $guide->tag = $request->tag;
         $guide->save();
 
         return response()->json($guide);
@@ -55,6 +57,7 @@ class GuideController extends Controller
             'isi' => 'required',
             'gambar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'nama_pembuat' => 'required|string|max:255',
+            'tag' => 'required|string|max:25',
         ]);
 
         if ($request->hasFile('gambar')) {
@@ -71,6 +74,7 @@ class GuideController extends Controller
         $guide->judul = $request->judul;
         $guide->isi = $request->isi;
         $guide->nama_pembuat = $request->nama_pembuat;
+        $guide->tag = $request->tag;
         $guide->save();
 
         return response()->json($guide);
