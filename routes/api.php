@@ -40,3 +40,6 @@ Route::apiResource("guides", GuideController::class);
 Route::apiResource('simulasi_guides', SimulasiGuideController::class);
 Route::apiResource('produks', ProdukController::class);
 Route::apiResource('orders', OrderController::class);
+
+Route::get('/guides/tag/{tag}', [GuideController::class, 'tag']);
+Route::get('/guides/search', [GuideController::class, 'search']);
