@@ -13,7 +13,10 @@ class ArtikelController extends Controller
      */
     public function index()
     {
-        $artikel = Artikel::get();
+        $artikel = Artikel::all()->map(function ($item) {
+            $item->gambar = url($item->gambar); // Menggabungkan base URL dengan path gambar
+            return $item;
+        });
         return response()->json($artikel);
     }
 
@@ -59,12 +62,11 @@ class ArtikelController extends Controller
     public function show(string $id)
     {
         $artikel = Artikel::find($id);
-
-        if (!$artikel) {
-            return response()->json(['message' => 'Artikel not found'], 404);
+        if ($artikel) {
+            $artikel->gambar = url($artikel->gambar); // Menggabungkan base URL dengan path gambar
+            return response()->json($artikel);
         }
-
-        return response()->json($artikel);
+        return response()->json(['message' => 'Artikel not found'], 404);
     }
 
     /**
