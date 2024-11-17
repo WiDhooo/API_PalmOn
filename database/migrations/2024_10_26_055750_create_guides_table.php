@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string("isi");
             $table->string("gambar")->nullable();
             $table->string("nama_pembuat");
+            $table->string("tag");
             $table->timestamps();
         });
     }

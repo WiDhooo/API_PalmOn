@@ -12,6 +12,8 @@ class UserUmum extends Model
         'email',
         'no_telp',
         'profile_picture',
+        'tanggal_lahir',
+        'jenis_kelamin',
     ];
 
     /**
