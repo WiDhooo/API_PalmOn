@@ -32,9 +32,10 @@ Route::put('kalkulasi/{id_user}/{id}', [KalkulasiController::class, 'update']);
 // Menghapus kalkulasi berdasarkan id_user dan id
 Route::delete('kalkulasi/{id_user}/{id}', [KalkulasiController::class, 'destroy']);
 
+Route::post('user_umum/login', [UserUmumController::class, 'login']);
+
 Route::apiResource('artikel', ArtikelController::class);
 Route::apiResource('user_umum', UserUmumController::class);
-Route::post('user_umum/login', [UserUmumController::class, 'login']);
 
 Route::apiResource("guides", GuideController::class);
 Route::apiResource('simulasi_guides', SimulasiGuideController::class);
