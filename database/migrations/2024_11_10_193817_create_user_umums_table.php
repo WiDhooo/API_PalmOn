@@ -13,13 +13,10 @@ return new class extends Migration
     {
         Schema::create('user_umums', function (Blueprint $table) {
             $table->id();
-            $table->string('username');
-            $table->string('password');
-            $table->string('email');
-            $table->string('no_telp');
-            $table->string('profile_picture')->nullable();
-            $table->string('jenis_kelamin')->nullable();
-            $table->string('tanggal_lahir')->nullable();
+            $table->string('nama', 50);
+            $table->string('email')->unique();
+            $table->string('no_telp', 15);
+            $table->string('alamat', 500);
             $table->timestamps();
         });
     }

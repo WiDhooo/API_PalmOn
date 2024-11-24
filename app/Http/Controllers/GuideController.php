@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Guide;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -17,6 +18,7 @@ class GuideController extends Controller
 
     public function store(Request $request)
     {
+
         // Validasi input
         $request->validate([
             'judul' => 'required|string|max:255',
@@ -27,7 +29,7 @@ class GuideController extends Controller
         ]);
 
         // Upload gambar
-        $path = $request->file('gambar')->store('uploads/guides', 'public');
+        $path = $request->file('gambar')->store('gambars', 'public');
 
         // Simpan data ke database
         $guide = new Guide();
@@ -44,6 +46,10 @@ class GuideController extends Controller
     public function show(string $id)
     {
         $guide = Guide::find($id);
+        if (!$guide) {
+            return response()->json(['message' => 'Guide not found'], 404);
+        }
+        $guide->gambar = url('storage/' . $guide->gambar); // Menggabungkan base URL dengan path gambar
         return response()->json($guide);
     }
 

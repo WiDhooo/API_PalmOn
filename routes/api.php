@@ -8,6 +8,7 @@ use App\Http\Controllers\GuideController;
 use App\Http\Controllers\SimulasiGuideController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\AuthController;
 
 
 use Illuminate\Http\Request;
@@ -36,8 +37,12 @@ Route::post('user_umum/login', [UserUmumController::class, 'login']);
 
 Route::apiResource('artikel', ArtikelController::class);
 Route::apiResource('user_umum', UserUmumController::class);
+Route::apiResource('guides', GuideController::class);
 
-Route::apiResource("guides", GuideController::class);
+
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout']);
+
 Route::apiResource('simulasi_guides', SimulasiGuideController::class);
 Route::apiResource('produks', ProdukController::class);
 Route::apiResource('orders', OrderController::class);

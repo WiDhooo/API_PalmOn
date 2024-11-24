@@ -3,46 +3,20 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class UserUmum extends Model
 {
+    use HasFactory;
+
+    // Tentukan nama tabel jika berbeda dari nama model yang diharapkan
+    protected $table = 'user_umums';
+
+    // Tentukan atribut yang dapat diisi secara massal
     protected $fillable = [
-        'username',
-        'password',
+        'nama',
         'email',
         'no_telp',
-        'profile_picture',
-        'tanggal_lahir',
-        'jenis_kelamin',
+        'alamat',
     ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-    ];
-
-    /**
-     * Get the full URL of the profile picture.
-     *
-     * @return string|null
-     */
-    public function getProfilePictureUrlAttribute()
-    {
-        return $this->profile_picture ? asset($this->profile_picture) : null;
-    }
-
-    /**
-     * Automatically hash the password when set.
-     *
-     * @param string $value
-     * @return void
-     */
-    public function setPasswordAttribute($value)
-    {
-        $this->attributes['password'] = bcrypt($value);
-    }
 }
